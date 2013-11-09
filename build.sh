@@ -10,8 +10,17 @@ if [ ! -d $IMAGE_BUILD_PATH ];then
 	exit 1
 fi
 
+# build a link
+ln -sf ./OpenWrt-ImageBuilder-ar71xx_generic-for-linux-i486/bin ./
+
+# go to compile
 cd ./OpenWrt-ImageBuilder-ar71xx_generic-for-linux-i486
 # start make...
 make image PROFILE=TLWR703 PACKAGES="luci luci-theme-bootstrap luci-i18n-chinese restorefactory" FILES="../SLboatMod_files"
 # TODO:check if really work..
-echo -e "\n\n\n ------- Work done! ------- \n\n\n"
+echo -e "\n\n\n"
+echo "------- Work done! -------\n"
+echo -e "You can found the firmware on ./bin/"
+echo -e "if you like,you should try direct by:"
+echo -e "python -m SimpleHTTPServer&"
+echo -e "\n\n\n "
