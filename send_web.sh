@@ -10,9 +10,9 @@ cd bin/
 echo -e "\n\n\n"
 # kill old server,if have one.
 prev_server_pid=$(ps -ef |grep SimpleHTTPServer |grep -v grep | awk '{print $2}')
-if [ -z $prev_server_pid ];then
+if [ ! -z $prev_server_pid ];then
 	echo -e "Kill the prev server first...\n"
-	kill -9 $prev_server
+	kill -9 $prev_server_pid
 fi
 
 # just start the server
