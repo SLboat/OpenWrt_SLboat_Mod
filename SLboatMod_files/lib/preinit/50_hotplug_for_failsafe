@@ -1,0 +1,16 @@
+#!/bin/sh
+# This is strart hotplud for failsafe
+# the mod is by slboat
+
+start_hotplug2() {
+        killall -q hotplug2
+        [ -x /sbin/hotplug2 ] && /sbin/hotplug2 --override --persistent \
+                        --set-rules-file /etc/hotplug2.rules \
+                        --set-coldplug-cmd /sbin/udevtrigger \
+                        --max-children 1 >/dev/null 2>&1 &
+	echo -e "\nSLboat: The hotplug2 for the reset button has start work!"
+	echo "If you want,you can push reset button more than 10 second for firstboot!"
+
+  }
+  
+boot_hook_add failsafe start_hotplug2

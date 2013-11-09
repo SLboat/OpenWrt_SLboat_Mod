@@ -1,0 +1,55 @@
+#!/bin/sh
+
+# let's loag the led
+. /etc/diag.sh
+get_status_led
+
+# for failsafe mode,it cant read everything
+button="reset"
+action="pressed"
+timeout=10
+
+system_config() {
+	config_get button "$1" button "reset"
+	config_get action "$1" action "pressed"
+	config_get timeout "$1" timeout "10"
+}
+
+config_load system
+config_foreach system_config restorefactory
+
+[ "$BUTTON" = "$button" ] && {
+	[ -f /tmp/run/restore_now.pid ] && logger -p user.info -t "restorefactory" "restore to factory are start working now!" && exit 1 
+
+	# if we cancal one,then Let the led just normal ON
+	[ -f /tmp/run/restorefactory.pid ] && read PID < /tmp/run/restorefactory.pid && kill $PID && rm /tmp/run/restorefactory.pid && logger -p user.info -t "restorefactory" "restore to factory defaults aborted" && set_state done && [ -f /tmp/.failsafe ] && set_state failsafe
+
+	[ "$ACTION" = "$action" ] && {
+
+		if [ "$timeout" -gt 0 ]
+		then
+			# make the led slow ,so we know now are doing restore
+			status_led_set_timer 250 250
+
+			# make sure we can use the folder/tmp/run,mostly just not easy use it in failsafemode
+			mkdir -p /tmp/run/
+
+			# wait the time and let led flash like failsafe
+			sleep "$timeout" && status_led_set_timer 80 200 && rm /tmp/run/restorefactory.pid && echo work > /tmp/run/restore_now.pid && firstboot && set_state done && sleep 2 && reboot -f &			
+
+			echo $! > /tmp/run/restorefactory.pid
+
+			logger -p user.info -t "restorefactory" "restoring to factory defaults in $timeout seconds"
+		elif [ "$timeout" -eq 0 ]
+		then
+			# make the led feelsafe 
+			set_state failsafe
+
+			firstboot && reboot &
+		else
+			logger -p user.info -t "restorefactory" "invalid timeout value ($timeout)"
+		fi
+	}
+} 
+
+
