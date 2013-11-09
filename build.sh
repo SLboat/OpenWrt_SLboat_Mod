@@ -13,5 +13,5 @@ fi
 cd ./OpenWrt-ImageBuilder-ar71xx_generic-for-linux-i486
 # start make...
 make image PROFILE=TLWR703 PACKAGES="luci luci-theme-bootstrap luci-i18n-chinese restorefactory" FILES="../SLboatMod_files"
-echo ..
-echo "work done!"
+# TODO:check if really work..
+echo -e "\n\n\n ------- Work done! ------- \n\n\n"
