@@ -5,6 +5,9 @@ OpenWrt-ImageBuilder-ar71xx_generic-for-linux-i486/
 OpenWrt-ImageBuilder-ar71xx_generic-for-linux-i486.*
 bin
 
+# SLboat's patch
+Openwrt_12.09_r36088-USB11_RESET_PATCH/
+
 #################
 ## Eclipse
 #################
