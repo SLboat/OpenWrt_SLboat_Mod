@@ -1,5 +1,5 @@
 # the image build's check patch
-IMAGE_BUILD_PATH=OpenWrt-ImageBuilder-ar71xx_generic-for-linux-i486
+IMAGE_BUILD_PATH=OpenWrt-ImageBuilder-ar71xx_generic-for-linux-x86_64
 
 # check if have the image build
 if [ ! -d $IMAGE_BUILD_PATH ];then
@@ -11,10 +11,10 @@ if [ ! -d $IMAGE_BUILD_PATH ];then
 fi
 
 # build a link
-ln -sf ./OpenWrt-ImageBuilder-ar71xx_generic-for-linux-i486/bin ./
+ln -sf ./$IMAGE_BUILD_PATH/bin ./
 
 # go to compile
-cd ./OpenWrt-ImageBuilder-ar71xx_generic-for-linux-i486
+cd ./$IMAGE_BUILD_PATH
 # start make...
 make image PROFILE=TLWR703 PACKAGES="luci luci-theme-bootstrap luci-i18n-chinese restorefactory" FILES="../SLboatMod_files"
 # TODO:check if really work..
