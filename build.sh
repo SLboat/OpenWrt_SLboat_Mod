@@ -16,7 +16,7 @@ ln -sf ./$IMAGE_BUILD_PATH/bin ./
 # go to compile
 cd ./$IMAGE_BUILD_PATH
 # start make...
-make image PROFILE=TLWR703 PACKAGES="luci luci-theme-bootstrap luci-i18n-chinese restorefactory" FILES="../SLboatMod_files"
+make image PROFILE=TLWR703 PACKAGES="luci luci-i18n-chinese restorefactory" FILES="../SLboatMod_files"
 # TODO:check if really work..
 echo -e "\n\n\n"
 echo "------- Work done! -------\n"
